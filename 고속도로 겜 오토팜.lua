@@ -1,3 +1,5 @@
+if game.PlaceId ~= 15223594893 then return warn("여긴 고속도로 운전 한국 베타 가 아닌데요? (고속도로 겜 오토팜.lua)") end
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local Vim = game:GetService("VirtualInputManager")
