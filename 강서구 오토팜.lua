@@ -44,9 +44,39 @@ local function get_enabled_prompt_parts()
 	return enabled_parts
 end
 
+local function make_notif(text)
+	task.spawn(function()
+		local tween_service = game:GetService("TweenService")
+		local player = game:GetService("Players").LocalPlayer
+		local player_gui = player:FindFirstChild("PlayerGui")
+		local main_frame = player_gui:FindFirstChild("ScreenGui"):WaitForChild("MainFrame")
+		local content_label = main_frame:WaitForChild("content")
+		
+		local position_visible = UDim2.new(0.884, 0, 0.92, 0)
+		local position_hidden = UDim2.new(0.884, 0, 1.1, 0)
+		local tween_info = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
+		
+		content_label.Text = text
+		main_frame.Position = position_hidden
+		main_frame.Visible = true
+			
+		local tween_show = tween_service:Create(main_frame, tween_info, { Position = position_visible })
+		tween_show:Play()
+		tween_show.Completed:Wait()
+			
+		task.wait(2)
+			
+		local tween_hide = tween_service:Create(main_frame, tween_info, { Position = position_hidden })
+		tween_hide:Play()
+		tween_hide.Completed:Wait()
+			
+		main_frame.Visible = false
+	end)
+end
+
 local function start_loop()
 	if loop_thread then return end
-
+	make_notif("자동 배달 기능이 활성화되었어요!")
 	is_running = true
 	loop_thread = coroutine.create(function()
 		while is_running do
@@ -77,6 +107,7 @@ local function start_loop()
 end
 
 local function stop_loop()
+	make_notif("자동 배달 기능이 비활성화되었어요!")
 	is_running = false
 end
 
