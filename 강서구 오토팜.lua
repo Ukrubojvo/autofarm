@@ -1,3 +1,5 @@
+if game.PlaceId ~= 105807454755941 then return warn("여긴 Gangseo-gu│강서구 가 아닌데요? (강서구 오토팜.lua)") end
+
 local players = game:GetService("Players")
 local run_service = game:GetService("RunService")
 local vim = game:GetService("VirtualInputManager")
